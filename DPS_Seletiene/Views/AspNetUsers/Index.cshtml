@@ -1,0 +1,52 @@
+﻿@model IEnumerable<DPS_Seletiene.data.AspNetUsers>
+
+@{
+    ViewBag.Title = "Index";
+}
+<p></p>
+<div class="navbar navbar-inverse">
+    <div class="container">
+
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Usuarios", "Index", "userapps")</li>
+                <li>@Html.ActionLink("Productos", "Index", "productservices")</li>
+                <li>@Html.ActionLink("Calificaciones", "Index", "qualificationps")</li>
+                <li>@Html.ActionLink("Usuarios Plataforma", "Index", "AspNetUsers")</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<p></p>
+
+<p>
+    @Html.ActionLink("Crear", "../Account/Register")
+</p>
+<p>@Html.ActionLink("Modificar Perfiles", "Index", "AspNetUserRoles")</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Correo")
+        </th>
+        <th>
+            @Html.DisplayName("Usuario")
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserName)
+        </td>
+        <td>
+            @Html.ActionLink("Eliminar", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

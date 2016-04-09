@@ -1,0 +1,116 @@
+﻿@model DPS_Seletiene.data.productservice
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<p></p>
+
+<div class="navbar navbar-inverse">
+    <div class="container">
+
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Usuarios", "Index", "userapps")</li>
+                <li>@Html.ActionLink("Productos", "Index", "productservices")</li>
+                <li>@Html.ActionLink("Calificaciones", "Index", "qualificationps")</li>
+                <li>@Html.ActionLink("Usuarios Plataforma", "Index", "AspNetUsers")</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<h2>Editar</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Producto o servicio</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.id)
+
+        <div class="form-group">
+            @Html.Label("Tipo", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.type)
+                @Html.DisplayFor(model => model.type_ps.name)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Categoría", "Categoría", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.idcategory)
+                @Html.DisplayFor(model => model.category.name)
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Propietario", "Propietario", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.idowner)
+                @Html.DisplayFor(model => model.userapp.id_card)
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Nombre", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.name)
+                @Html.DisplayFor(model => model.name)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Descripción", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.description)
+                @Html.DisplayFor(model => model.description)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Fecha de registro", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.dateup)
+                @Html.DisplayFor(model => model.dateup)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Estado", "Estado", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("status", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.status, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Horario", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.schedule)
+                @Html.DisplayFor(model => model.schedule)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Guardar cambios" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Volver a la lista", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

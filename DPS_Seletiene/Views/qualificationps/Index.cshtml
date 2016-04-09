@@ -1,0 +1,74 @@
+﻿@model IEnumerable<DPS_Seletiene.data.qualificationps>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<p></p>
+
+<div class="navbar navbar-inverse">
+    <div class="container">
+
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Usuarios", "Index", "userapps")</li>
+                <li>@Html.ActionLink("Productos", "Index", "productservices")</li>
+                <li>@Html.ActionLink("Calificaciones", "Index", "qualificationps")</li>
+                <li>@Html.ActionLink("Usuarios Plataforma", "Index", "AspNetUsers")</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<h2>Calificaciones</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Calificación")
+        </th>
+        <th>
+            @Html.DisplayName("Producto")
+        </th>
+        <th>
+            @Html.DisplayName("Vendedor")
+        </th>
+        <th>
+            @Html.DisplayName("Departamento")
+        </th>
+        <th>
+            @Html.DisplayName("Municipio")
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.value)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.productservice.name)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.productservice.userapp.name1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.productservice.userapp.city1.department.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.productservice.userapp.city1.Name)
+            </td>
+
+            <td>
+                @Html.ActionLink("Detalles", "Details", new { id = item.id })
+            </td>
+
+        </tr>
+    }
+
+</table>

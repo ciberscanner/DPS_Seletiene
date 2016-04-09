@@ -1,0 +1,139 @@
+﻿@model IEnumerable<DPS_Seletiene.data.userapp>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<p></p>
+
+<div class="navbar navbar-inverse">
+    <div class="container">
+
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Usuarios", "Index", "userapps")</li>
+                <li>@Html.ActionLink("Productos", "Index", "productservices")</li>
+                <li>@Html.ActionLink("Calificaciones", "Index", "qualificationps")</li>
+                <li>@Html.ActionLink("Usuarios Plataforma", "Index", "AspNetUsers")</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<h2>Usuarios</h2>
+
+@using (Html.BeginForm())
+{
+    <p>
+        <table>
+            <tr>
+                <td>
+                    Buscar por primer nombre, primer apellido, número de cédula, correo o teléfono:
+                </td>
+                <td>&ensp;</td>
+                <td>
+                    @Html.TextBox("SearchString", null, new { @class = "form-control" })
+                </td>
+                <td>&ensp;</td>
+                <td>
+                    <input type="submit" value="Buscar" class="btn btn-primary" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-group">
+                        <div>Estado:</div>
+                        <div class="radio-inline">
+                            @Html.RadioButton("state", "Todo", true, new { id = "Todo" }) Todos
+                        </div>
+                        <div class="radio-inline">
+                            @Html.RadioButton("state", "Revisado", new { id = "Revisado" }) Aprobado
+                        </div>
+                        <div class="radio-inline">
+                            @Html.RadioButton("state", "Sin_Revisar", new { id = "Sin_Revisar" }) Inactivo
+                        </div>
+                        <div class="radio-inline">
+                            @Html.RadioButton("state", "Rechazado", new { id = "Rechazado" }) Rechazado
+                        </div>
+                        <div class="radio-inline">
+                            @Html.RadioButton("state", "Suspendido", new { id = "Suspendido" }) Suspendido
+                        </div>
+                    </div>
+
+                </td>
+
+            </tr>
+        </table>
+    </p>
+}
+
+<table class="table table-striped table-hover">
+    <tr>
+        <th>
+            Cédula
+        </th>
+        <th>
+            @Html.ActionLink("Primer Nombre", "Index", new { sortOrder = ViewBag.NameSortParm })
+        </th>
+        <th>
+            Segundo Nombre
+        </th>
+        <th>
+            Primer Apellido
+        </th>
+        <th>
+            Segundo Apellido
+        </th>
+        <th>
+            Número Teléfono
+        </th>
+        <th>
+            Fecha de Nacimiento
+        </th>
+        <th>
+            Correo
+        </th>
+        <th>
+            Estado
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.id_card)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.name1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.name2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.lastname1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.lastname2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.telephone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.birthdate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.user_state.name)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Edit", new { id = item.id })
+            </td>
+        </tr>
+    }
+
+</table>

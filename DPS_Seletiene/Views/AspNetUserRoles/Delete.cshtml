@@ -1,0 +1,40 @@
+﻿@model DPS_Seletiene.data.AspNetUserRoles
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Eliminar</h2>
+
+<h3>¿Deseas eliminar?</h3>
+<div>
+    <h4>Rol de usuario</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Rol")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AspNetRoles.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Usuario")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AspNetUsers.Email)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Eliminar" class="btn btn-default" /> |
+            @Html.ActionLink("Volver a la lista", "Index")
+        </div>
+    }
+</div>

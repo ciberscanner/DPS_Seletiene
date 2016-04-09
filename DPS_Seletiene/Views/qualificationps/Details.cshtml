@@ -1,0 +1,63 @@
+﻿@model DPS_Seletiene.data.qualificationps
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<p></p>
+
+<div class="navbar navbar-inverse">
+    <div class="container">
+
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Usuarios", "Index", "userapps")</li>
+                <li>@Html.ActionLink("Productos", "Index", "productservices")</li>
+                <li>@Html.ActionLink("Calificaciones", "Index", "qualificationps")</li>
+                <li>@Html.ActionLink("Usuarios Plataforma", "Index", "AspNetUsers")</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div>
+    <h4>Calificación</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Comentario")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.comment)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Valor")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.value)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Fecha")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dateup)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Producto /  Servicio")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.productservice.name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Volver a la lista", "Index")
+</p>
