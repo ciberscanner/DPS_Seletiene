@@ -16,9 +16,21 @@ namespace DPS_Seletiene.Controllers
 
         // GET: qualificationps
         [Authorize(Roles = "Administrador, Callcenter")]
-        public ActionResult Index()
+        public ActionResult Index(string searchString)
         {
             var qualificationps = db.qualificationps.Include(q => q.productservice);
+
+            if (searchString != null)
+            {
+                qualificationps = qualificationps.Where(s => (s.value.ToString()).Contains(searchString)
+                                       || s.productservice.name.Contains(searchString)
+                                       || s.productservice.userapp.name1.Contains(searchString)
+                                       || s.productservice.userapp.city1.department.Name.Contains(searchString)
+                                       || s.productservice.userapp.city1.Name.Contains(searchString));
+            }
+
+            qualificationps = qualificationps.OrderByDescending(s => s.dateup);
+
             return View(qualificationps.ToList());
         }
 

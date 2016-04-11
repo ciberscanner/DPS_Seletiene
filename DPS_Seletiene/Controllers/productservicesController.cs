@@ -84,6 +84,8 @@ namespace DPS_Seletiene.Controllers
 
             }
 
+            productservice = productservice.OrderByDescending(s => s.dateup);
+
             return View(productservice.ToList());
         }
 

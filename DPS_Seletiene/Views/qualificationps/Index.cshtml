@@ -22,6 +22,27 @@
 
 <h2>Calificaciones</h2>
 
+@using (Html.BeginForm())
+{
+    <p>
+        <table>
+            <tr>
+                <td>
+                    Buscar por valor, nombre de producto, vendedor, departamento o municipio:
+                </td>
+                <td>&ensp;</td>
+                <td>
+                    @Html.TextBox("SearchString", null, new { @class = "form-control" })
+                </td>
+                <td>&ensp;</td>
+                <td>
+                    <input type="submit" value="Buscar" class="btn btn-primary" />
+                </td>
+            </tr>
+        </table>
+    </p>
+}
+
 
 <table class="table">
     <tr>
