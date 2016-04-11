@@ -11,6 +11,7 @@ namespace DPS_Seletiene.data
 {
     using System;
     using System.Collections.Generic;
+    using System.Runtime.Serialization;
     
     public partial class category
     {
@@ -24,6 +25,7 @@ namespace DPS_Seletiene.data
         public string name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [IgnoreDataMember]
         public virtual ICollection<productservice> productservice { get; set; }
     }
 }

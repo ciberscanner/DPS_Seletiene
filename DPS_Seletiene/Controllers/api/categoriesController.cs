@@ -20,9 +20,12 @@ namespace DPS_Seletiene.Controllers.api
         private seletieneEntities db = new seletieneEntities();
 
         // GET: api/categories
-        public IQueryable<category> Getcategory()
+   
+        public List<category> Getcategory()
         {
-            return db.category;
+
+
+            return db.category.ToList();
         }
 
         // GET: api/categories/5

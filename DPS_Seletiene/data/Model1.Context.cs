@@ -18,6 +18,8 @@ namespace DPS_Seletiene.data
         public seletieneEntities()
             : base("name=seletieneEntities")
         {
+            this.Configuration.LazyLoadingEnabled = false; 
+
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
