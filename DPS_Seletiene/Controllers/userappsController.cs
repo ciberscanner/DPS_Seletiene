@@ -8,7 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using DPS_Seletiene.data;
 
-namespace DPS_Seletiene.Controllers
+namespace Auxiliar.Controllers
 {
     public class userappsController : Controller
     {
@@ -18,9 +18,6 @@ namespace DPS_Seletiene.Controllers
         [Authorize(Roles = "Administrador, Callcenter")]
         public ActionResult Index(string sortOrder, string searchString, string state)
         {
-            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
-            
             var userapp = db.userapp.Include(u => u.city1).Include(u => u.collective1).Include(u => u.user_state);
 
             if (!String.IsNullOrEmpty(searchString))
@@ -62,7 +59,7 @@ namespace DPS_Seletiene.Controllers
 
                         break;
                 }
-                
+
             }
             else
             {
@@ -98,15 +95,17 @@ namespace DPS_Seletiene.Controllers
                     userapp = userapp.OrderBy(s => s.name1);
                     break;
                 case "Date":
-                    
+
                     break;
                 case "date_desc":
-                    
+
                     break;
                 default:
-                    
+
                     break;
             }
+
+            return View(userapp.ToList());
 
             return View(userapp.ToList());
         }
@@ -133,7 +132,7 @@ namespace DPS_Seletiene.Controllers
         {
             ViewBag.city = new SelectList(db.city, "ID", "Name");
             ViewBag.collective = new SelectList(db.collective, "id", "nombre");
-            ViewBag.active = new SelectList(db.user_state, "id", "name");
+            ViewBag.status = new SelectList(db.user_state, "id", "name");
             return View();
         }
 
@@ -142,7 +141,7 @@ namespace DPS_Seletiene.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,id_card,name1,name2,lastname1,lastname2,birthdate,registrationdate,city,collective,telephone,cellphone,email,passw,active,securitystamp")] userapp userapp)
+        public ActionResult Create([Bind(Include = "id,id_card,name1,name2,lastname1,lastname2,birthdate,registrationdate,city,collective,telephone,cellphone,email,passw,status,securitystamp")] userapp userapp)
         {
             if (ModelState.IsValid)
             {
@@ -181,7 +180,7 @@ namespace DPS_Seletiene.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,id_card,name1,name2,lastname1,lastname2,birthdate,registrationdate,city,collective,telephone,cellphone,email,passw,active,securitystamp")] userapp userapp)
+        public ActionResult Edit([Bind(Include = "id,id_card,name1,name2,lastname1,lastname2,birthdate,registrationdate,city,collective,telephone,cellphone,email,passw,status,securitystamp")] userapp userapp)
         {
             if (ModelState.IsValid)
             {
@@ -196,7 +195,7 @@ namespace DPS_Seletiene.Controllers
         }
 
         // GET: userapps/Delete/5
-        [Authorize(Roles = "Administrador, Callcenter")]
+        [Authorize(Roles = "Administrador")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
