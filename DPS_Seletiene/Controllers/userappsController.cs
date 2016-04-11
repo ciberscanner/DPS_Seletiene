@@ -106,8 +106,6 @@ namespace Auxiliar.Controllers
             }
 
             return View(userapp.ToList());
-
-            return View(userapp.ToList());
         }
 
         // GET: userapps/Details/5
