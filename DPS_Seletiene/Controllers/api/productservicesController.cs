@@ -56,22 +56,9 @@ namespace DPS_Seletiene.Controllers.api
             productservice.status = state;
             db.Entry(productservice).State = EntityState.Modified;
             db.SaveChanges();
-              return Ok(productservice);
-        }
-
-        // GET: api/productservices/5
-        [ResponseType(typeof(productservice))]
-        public async Task<IHttpActionResult> Getproductservice(int id)
-        {
-            productservice productservice = await db.productservice.FindAsync(id);
-            if (productservice == null)
-            {
-                return NotFound();
-            }
-
             return Ok(productservice);
         }
-
+         
         // PUT: api/productservices/5
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> Putproductservice(int id, productservice productservice)

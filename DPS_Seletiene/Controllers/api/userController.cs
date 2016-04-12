@@ -13,6 +13,9 @@ using System.Data.Entity.Validation;
 using System.Net.Mail;
 using System.Text;
 using DPS_Seletiene.data;
+using DPS_Seletiene.Models;
+
+using System.Security.Cryptography;
 
 
 namespace DPS_Seletiene.Controllers.api
@@ -32,6 +35,7 @@ namespace DPS_Seletiene.Controllers.api
         [ResponseType(typeof(userapp))]
         public userapp Login(string email, string pass)
         {
+            pass=MD5Manager.Encrypt(pass, true);
             List<userapp> user = db.userapp.Where(r => r.email.Equals(email)).Where(r => r.passw.Equals(pass)).ToList();
                if(user.Count > 0)
                {
@@ -42,7 +46,7 @@ namespace DPS_Seletiene.Controllers.api
 
               return null;
         }
-
+       
         [System.Web.Http.HttpGet]
         [ResponseType(typeof(userapp))]
         public userapp Actualizar(int  id, string telephone,string cellphone,string email)
@@ -182,7 +186,7 @@ namespace DPS_Seletiene.Controllers.api
             {
                 return BadRequest();
             }
-
+        
             db.Entry(userapp).State = EntityState.Modified;
 
             try
@@ -216,8 +220,9 @@ namespace DPS_Seletiene.Controllers.api
             try
             {
 
+                userapp.passw = MD5Manager.Encrypt(userapp.passw, true);
                 userapp.status = 1;
-            db.userapp.Add(userapp);
+                db.userapp.Add(userapp);
             await db.SaveChangesAsync();
       
             }
