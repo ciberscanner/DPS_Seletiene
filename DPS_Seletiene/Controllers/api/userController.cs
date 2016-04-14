@@ -219,7 +219,13 @@ namespace DPS_Seletiene.Controllers.api
             }
             try
             {
+                List<userapp> user = db.userapp.Where(r => r.email.Equals(userapp.email)).ToList();
+                if (user.Count > 0)
+                {
+                    return Content(HttpStatusCode.BadRequest, "Usuario existente");
+ 
 
+                }
                 userapp.passw = MD5Manager.Encrypt(userapp.passw, true);
                 userapp.status = 1;
                 db.userapp.Add(userapp);
