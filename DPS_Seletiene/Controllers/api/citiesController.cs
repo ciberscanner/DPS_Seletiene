@@ -1,5 +1,4 @@
-﻿using DPS_Seletiene.data;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -7,64 +6,58 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using DPS_Seletiene.data;
 
-
 namespace DPS_Seletiene.Controllers.api
 {
-    public class categoriesController : ApiController
+    public class citiesController : ApiController
     {
         private seletieneEntities db = new seletieneEntities();
 
-        // GET: api/categories
-   
-        public List<category> Getcategory()
+        // GET: api/cities
+        public IQueryable<city> Getcity()
         {
-            db.Configuration.LazyLoadingEnabled = false;
-
-
-            return db.category.ToList();
+            return db.city;
         }
 
-        // GET: api/categories/5
-        [ResponseType(typeof(category))]
-        public async Task<IHttpActionResult> Getcategory(int id)
+        // GET: api/cities/5
+        [ResponseType(typeof(city))]
+        public IHttpActionResult Getcity(int id)
         {
-            category category = await db.category.FindAsync(id);
-            if (category == null)
+            city city = db.city.Find(id);
+            if (city == null)
             {
                 return NotFound();
             }
 
-            return Ok(category);
+            return Ok(city);
         }
 
-        // PUT: api/categories/5
+        // PUT: api/cities/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> Putcategory(int id, category category)
+        public IHttpActionResult Putcity(int id, city city)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != category.id)
+            if (id != city.ID)
             {
                 return BadRequest();
             }
 
-            db.Entry(category).State = EntityState.Modified;
+            db.Entry(city).State = EntityState.Modified;
 
             try
             {
-                await db.SaveChangesAsync();
+                db.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!categoryExists(id))
+                if (!cityExists(id))
                 {
                     return NotFound();
                 }
@@ -77,24 +70,24 @@ namespace DPS_Seletiene.Controllers.api
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/categories
-        [ResponseType(typeof(category))]
-        public async Task<IHttpActionResult> Postcategory(category category)
+        // POST: api/cities
+        [ResponseType(typeof(city))]
+        public IHttpActionResult Postcity(city city)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.category.Add(category);
+            db.city.Add(city);
 
             try
             {
-                await db.SaveChangesAsync();
+                db.SaveChanges();
             }
             catch (DbUpdateException)
             {
-                if (categoryExists(category.id))
+                if (cityExists(city.ID))
                 {
                     return Conflict();
                 }
@@ -104,23 +97,23 @@ namespace DPS_Seletiene.Controllers.api
                 }
             }
 
-            return CreatedAtRoute("DefaultApi", new { id = category.id }, category);
+            return CreatedAtRoute("DefaultApi", new { id = city.ID }, city);
         }
 
-        // DELETE: api/categories/5
-        [ResponseType(typeof(category))]
-        public async Task<IHttpActionResult> Deletecategory(int id)
+        // DELETE: api/cities/5
+        [ResponseType(typeof(city))]
+        public IHttpActionResult Deletecity(int id)
         {
-            category category = await db.category.FindAsync(id);
-            if (category == null)
+            city city = db.city.Find(id);
+            if (city == null)
             {
                 return NotFound();
             }
 
-            db.category.Remove(category);
-            await db.SaveChangesAsync();
+            db.city.Remove(city);
+            db.SaveChanges();
 
-            return Ok(category);
+            return Ok(city);
         }
 
         protected override void Dispose(bool disposing)
@@ -132,9 +125,9 @@ namespace DPS_Seletiene.Controllers.api
             base.Dispose(disposing);
         }
 
-        private bool categoryExists(int id)
+        private bool cityExists(int id)
         {
-            return db.category.Count(e => e.id == id) > 0;
+            return db.city.Count(e => e.ID == id) > 0;
         }
     }
 }

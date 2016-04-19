@@ -1,5 +1,4 @@
-﻿using DPS_Seletiene.data;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -7,64 +6,58 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using DPS_Seletiene.data;
 
-
 namespace DPS_Seletiene.Controllers.api
 {
-    public class categoriesController : ApiController
+    public class departmentsController : ApiController
     {
         private seletieneEntities db = new seletieneEntities();
 
-        // GET: api/categories
-   
-        public List<category> Getcategory()
+        // GET: api/departments
+        public IQueryable<department> Getdepartment()
         {
-            db.Configuration.LazyLoadingEnabled = false;
-
-
-            return db.category.ToList();
+            return db.department;
         }
 
-        // GET: api/categories/5
-        [ResponseType(typeof(category))]
-        public async Task<IHttpActionResult> Getcategory(int id)
+        // GET: api/departments/5
+        [ResponseType(typeof(department))]
+        public IHttpActionResult Getdepartment(int id)
         {
-            category category = await db.category.FindAsync(id);
-            if (category == null)
+            department department = db.department.Find(id);
+            if (department == null)
             {
                 return NotFound();
             }
 
-            return Ok(category);
+            return Ok(department);
         }
 
-        // PUT: api/categories/5
+        // PUT: api/departments/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> Putcategory(int id, category category)
+        public IHttpActionResult Putdepartment(int id, department department)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != category.id)
+            if (id != department.ID)
             {
                 return BadRequest();
             }
 
-            db.Entry(category).State = EntityState.Modified;
+            db.Entry(department).State = EntityState.Modified;
 
             try
             {
-                await db.SaveChangesAsync();
+                db.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!categoryExists(id))
+                if (!departmentExists(id))
                 {
                     return NotFound();
                 }
@@ -77,24 +70,24 @@ namespace DPS_Seletiene.Controllers.api
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/categories
-        [ResponseType(typeof(category))]
-        public async Task<IHttpActionResult> Postcategory(category category)
+        // POST: api/departments
+        [ResponseType(typeof(department))]
+        public IHttpActionResult Postdepartment(department department)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.category.Add(category);
+            db.department.Add(department);
 
             try
             {
-                await db.SaveChangesAsync();
+                db.SaveChanges();
             }
             catch (DbUpdateException)
             {
-                if (categoryExists(category.id))
+                if (departmentExists(department.ID))
                 {
                     return Conflict();
                 }
@@ -104,23 +97,23 @@ namespace DPS_Seletiene.Controllers.api
                 }
             }
 
-            return CreatedAtRoute("DefaultApi", new { id = category.id }, category);
+            return CreatedAtRoute("DefaultApi", new { id = department.ID }, department);
         }
 
-        // DELETE: api/categories/5
-        [ResponseType(typeof(category))]
-        public async Task<IHttpActionResult> Deletecategory(int id)
+        // DELETE: api/departments/5
+        [ResponseType(typeof(department))]
+        public IHttpActionResult Deletedepartment(int id)
         {
-            category category = await db.category.FindAsync(id);
-            if (category == null)
+            department department = db.department.Find(id);
+            if (department == null)
             {
                 return NotFound();
             }
 
-            db.category.Remove(category);
-            await db.SaveChangesAsync();
+            db.department.Remove(department);
+            db.SaveChanges();
 
-            return Ok(category);
+            return Ok(department);
         }
 
         protected override void Dispose(bool disposing)
@@ -132,9 +125,9 @@ namespace DPS_Seletiene.Controllers.api
             base.Dispose(disposing);
         }
 
-        private bool categoryExists(int id)
+        private bool departmentExists(int id)
         {
-            return db.category.Count(e => e.id == id) > 0;
+            return db.department.Count(e => e.ID == id) > 0;
         }
     }
 }

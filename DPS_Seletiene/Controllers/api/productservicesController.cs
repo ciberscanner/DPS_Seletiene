@@ -20,7 +20,9 @@ namespace DPS_Seletiene.Controllers.api
 
         // GET: api/productservices
         public IQueryable<productservice> Getproductservice()
+
         {
+            db.Configuration.LazyLoadingEnabled = false;
             return db.productservice.Where(r => r.userapp.status == 1);
         }
           
@@ -28,6 +30,7 @@ namespace DPS_Seletiene.Controllers.api
      
         public IQueryable<productservice> productbyuser(int iduser)
         {
+            db.Configuration.LazyLoadingEnabled = false;
             return db.productservice.Where(r => r.idowner == iduser);
         }
 

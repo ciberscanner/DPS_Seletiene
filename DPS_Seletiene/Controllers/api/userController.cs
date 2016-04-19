@@ -27,7 +27,7 @@ namespace DPS_Seletiene.Controllers.api
         // GET: api/userappApi
         public IQueryable<userapp> Getuserapp()
         {
-            
+            db.Configuration.LazyLoadingEnabled = false;
             return db.userapp;
         }
         
@@ -35,6 +35,8 @@ namespace DPS_Seletiene.Controllers.api
         [ResponseType(typeof(userapp))]
         public userapp Login(string email, string pass)
         {
+            db.Configuration.LazyLoadingEnabled = false;
+
             pass=MD5Manager.Encrypt(pass, true);
             List<userapp> user = db.userapp.Where(r => r.email.Equals(email)).Where(r => r.passw.Equals(pass)).ToList();
                if(user.Count > 0)

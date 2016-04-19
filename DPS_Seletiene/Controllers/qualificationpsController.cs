@@ -18,7 +18,10 @@ namespace DPS_Seletiene.Controllers
         [Authorize(Roles = "Administrador, Callcenter")]
         public ActionResult Index(string searchString)
         {
+            db.Configuration.LazyLoadingEnabled = true; 
+
             var qualificationps = db.qualificationps.Include(q => q.productservice);
+            db.Configuration.LazyLoadingEnabled = true; 
 
             if (searchString != null)
             {
@@ -28,7 +31,7 @@ namespace DPS_Seletiene.Controllers
                                        || s.productservice.userapp.city1.department.Name.Contains(searchString)
                                        || s.productservice.userapp.city1.Name.Contains(searchString));
             }
-
+         
             qualificationps = qualificationps.OrderByDescending(s => s.dateup);
 
             return View(qualificationps.ToList());
@@ -38,6 +41,8 @@ namespace DPS_Seletiene.Controllers
         [Authorize(Roles = "Administrador, Callcenter")]
         public ActionResult Details(int? id)
         {
+            db.Configuration.LazyLoadingEnabled = true; 
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

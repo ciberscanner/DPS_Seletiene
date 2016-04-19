@@ -212,6 +212,8 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\api\categoriesController.cs" />
+    <Compile Include="Controllers\api\citiesController.cs" />
+    <Compile Include="Controllers\api\departmentsController.cs" />
     <Compile Include="Controllers\api\productservicesController.cs" />
     <Compile Include="Controllers\api\qualificationpsController.cs" />
     <Compile Include="Controllers\api\userController.cs" />

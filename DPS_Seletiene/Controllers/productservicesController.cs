@@ -18,6 +18,8 @@ namespace DPS_Seletiene.Controllers
         [Authorize(Roles = "Administrador, Callcenter")]
         public ActionResult Index(string sortOrder, string searchString, string state)
         {
+            db.Configuration.LazyLoadingEnabled = true; 
+
             var productservice = db.productservice.Include(p => p.category).Include(p => p.user_state).Include(p => p.type_ps).Include(p => p.userapp);
 
             if (!String.IsNullOrEmpty(searchString))
@@ -93,6 +95,8 @@ namespace DPS_Seletiene.Controllers
         [Authorize(Roles = "Administrador, Callcenter")]
         public ActionResult Details(int? id)
         {
+            db.Configuration.LazyLoadingEnabled = true; 
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

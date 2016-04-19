@@ -19,6 +19,8 @@ namespace DPS_Seletiene.Controllers.api
         // GET: api/qualificationps
         public IQueryable<qualificationps> Getqualificationps()
         {
+            db.Configuration.LazyLoadingEnabled = false;
+
             return db.qualificationps;
         }
 
@@ -26,6 +28,8 @@ namespace DPS_Seletiene.Controllers.api
         [System.Web.Http.HttpGet]
         public IQueryable<qualificationps> qualificationpsbyproduct(int idproducts)
         {
+            db.Configuration.LazyLoadingEnabled = false;
+
             return db.qualificationps.Where(r => r.idproduct == idproducts);
         }
 

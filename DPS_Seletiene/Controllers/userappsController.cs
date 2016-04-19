@@ -18,6 +18,8 @@ namespace Auxiliar.Controllers
         [Authorize(Roles = "Administrador, Callcenter")]
         public ActionResult Index(string sortOrder, string searchString, string state)
         {
+            db.Configuration.LazyLoadingEnabled = true; 
+
             var userapp = db.userapp.Include(u => u.city1).Include(u => u.collective1).Include(u => u.user_state);
 
             if (!String.IsNullOrEmpty(searchString))
