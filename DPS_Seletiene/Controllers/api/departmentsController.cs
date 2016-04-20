@@ -16,7 +16,7 @@ namespace DPS_Seletiene.Controllers.api
     {
         private seletieneEntities db = new seletieneEntities();
 
-        // GET: api/departments
+        // GET: api/ 
         public IQueryable<department> Getdepartment()
         {
             return db.department;

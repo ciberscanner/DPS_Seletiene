@@ -118,6 +118,8 @@ namespace DPS_Seletiene.Controllers.api
         public void sendemail(userapp user, string email)
         {
             user.passw = CreatePassword(6);
+            user.passw = MD5Manager.Encrypt(user.passw, true);
+
             db.Entry(user).State = EntityState.Modified;
             db.SaveChanges();
                 

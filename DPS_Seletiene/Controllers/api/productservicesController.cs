@@ -23,7 +23,7 @@ namespace DPS_Seletiene.Controllers.api
 
         {
             db.Configuration.LazyLoadingEnabled = false;
-            return db.productservice.Where(r => r.userapp.status == 1);
+            return db.productservice.Where(r => r.userapp.status == 2).Where(r=>r.status==2);
         }
           
         [System.Web.Http.HttpGet]

@@ -164,6 +164,8 @@ namespace Auxiliar.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            db.Configuration.LazyLoadingEnabled = true; 
+
             userapp userapp = db.userapp.Find(id);
             if (userapp == null)
             {

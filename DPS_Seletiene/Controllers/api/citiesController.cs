@@ -17,9 +17,10 @@ namespace DPS_Seletiene.Controllers.api
         private seletieneEntities db = new seletieneEntities();
 
         // GET: api/cities
-        public IQueryable<city> Getcity()
+        [System.Web.Http.HttpGet]
+        public IQueryable<city> GetcitybyDepartament(int iddepartament)
         {
-            return db.city;
+            return db.city.Where(r=>r.DepartmentID==iddepartament);
         }
 
         // GET: api/cities/5

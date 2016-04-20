@@ -59,6 +59,7 @@ namespace DPS_Seletiene.Controllers
         [Authorize(Roles = "Administrador, Callcenter")]
         public ActionResult Create()
         {
+            db.Configuration.LazyLoadingEnabled = true; 
             ViewBag.idproduct = new SelectList(db.productservice, "id", "name");
             return View();
         }
@@ -85,6 +86,7 @@ namespace DPS_Seletiene.Controllers
         [Authorize(Roles = "Administrador, Callcenter")]
         public ActionResult Edit(int? id)
         {
+            db.Configuration.LazyLoadingEnabled = true; 
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

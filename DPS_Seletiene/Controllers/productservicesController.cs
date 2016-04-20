@@ -154,6 +154,8 @@ namespace DPS_Seletiene.Controllers
             {
                 return HttpNotFound();
             }
+
+            db.Configuration.LazyLoadingEnabled = true; 
             ViewBag.idcategory = new SelectList(db.category, "id", "name", productservice.idcategory);
             ViewBag.status = new SelectList(db.user_state, "id", "name", productservice.status);
             ViewBag.type = new SelectList(db.type_ps, "id", "name", productservice.type);
