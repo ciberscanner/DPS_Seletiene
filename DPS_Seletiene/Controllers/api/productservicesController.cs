@@ -36,6 +36,33 @@ namespace DPS_Seletiene.Controllers.api
 
         [System.Web.Http.HttpGet]
 
+        public double productqualitity(int idproduct)
+        {
+            db.Configuration.LazyLoadingEnabled = false;
+            System.Nullable<Double> averageFreight =
+    (from ord in db.qualificationps.Where(r=>r.idproduct==idproduct)
+     select ord.value )
+    .Average();
+            return (double)averageFreight;
+            //double RatingAverage = db.qualificationps.Where(r =>r.id==idproduct).Average(r => r.value);
+            //var query = from item in db.qualificationps
+            //            group item by new { id = item.id} into grouped
+            //            select new
+            //            {
+            //                id = grouped.Key.id,
+                           
+            //                AverageValue = grouped.Average(x => x.value)
+            //            };
+            //foreach (var grp in query)
+            //{
+            // return   grp.AverageValue;
+            //}
+         //   return 1;
+
+        }
+
+        [System.Web.Http.HttpGet]
+
         [ResponseType(typeof(qualificationps))]
         public async Task<IHttpActionResult> rateProduct(int idpproducto, int value, string comment)
         {
