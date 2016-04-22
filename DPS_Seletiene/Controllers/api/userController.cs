@@ -25,11 +25,7 @@ namespace DPS_Seletiene.Controllers.api
         private seletieneEntities db = new seletieneEntities();
 
         // GET: api/userappApi
-        public IQueryable<userapp> Getuserapp()
-        {
-            db.Configuration.LazyLoadingEnabled = false;
-            return db.userapp;
-        }
+     
         
         [System.Web.Http.HttpGet]         
         [ResponseType(typeof(userapp))]
