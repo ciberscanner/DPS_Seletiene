@@ -34,6 +34,15 @@ namespace DPS_Seletiene.Controllers.api
             return db.productservice.Where(r => r.idowner == iduser);
         }
 
+
+        [System.Web.Http.HttpGet]
+
+        public IQueryable<productservice> productsbycategory(int idcategory)
+        {
+            db.Configuration.LazyLoadingEnabled = false;
+            return db.productservice.Where(r => r.idcategory == idcategory);
+        }
+
         [System.Web.Http.HttpGet]
 
         public double productqualitity(int idproduct)
@@ -44,20 +53,7 @@ namespace DPS_Seletiene.Controllers.api
      select ord.value )
     .Average();
             return (double)averageFreight;
-            //double RatingAverage = db.qualificationps.Where(r =>r.id==idproduct).Average(r => r.value);
-            //var query = from item in db.qualificationps
-            //            group item by new { id = item.id} into grouped
-            //            select new
-            //            {
-            //                id = grouped.Key.id,
-                           
-            //                AverageValue = grouped.Average(x => x.value)
-            //            };
-            //foreach (var grp in query)
-            //{
-            // return   grp.AverageValue;
-            //}
-         //   return 1;
+         
 
         }
 
@@ -74,6 +70,13 @@ namespace DPS_Seletiene.Controllers.api
             rate.dateup = DateTime.Now;
             db.qualificationps.Add(rate);
             db.SaveChanges();
+            db.Configuration.LazyLoadingEnabled = false;
+            System.Nullable<Double> average =
+    (from ord in db.qualificationps.Where(r => r.idproduct == idpproducto)
+     select ord.value)
+    .Average();
+            productservice product = db.productservice.Find(idpproducto);
+           // product.quality = average.ToString();
             return Ok(rate);
         }
 
