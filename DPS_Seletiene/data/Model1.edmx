@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="seletieneModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="seletieneModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -111,6 +111,9 @@
           <Property Name="status" Type="int" Nullable="false" />
           <Property Name="schedule" Type="nvarchar(max)" Nullable="false" />
           <Property Name="image" Type="varchar(max)" />
+          <Property Name="calification" Type="float" />
+          <Property Name="depto" Type="int" />
+          <Property Name="city" Type="int" />
         </EntityType>
         <EntityType Name="qualificationps">
           <Key>
@@ -121,16 +124,6 @@
           <Property Name="comment" Type="nvarchar(max)" />
           <Property Name="value" Type="int" Nullable="false" />
           <Property Name="dateup" Type="date" Nullable="false" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="type_ps">
           <Key>
@@ -166,6 +159,31 @@
           <Property Name="passw" Type="nvarchar(max)" Nullable="false" />
           <Property Name="status" Type="int" />
           <Property Name="securitystamp" Type="nvarchar(max)" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'seletiene.ricardo.ViewProductServices' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ViewProductServices">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="dateup" />
+            <PropertyRef Name="status" />
+            <PropertyRef Name="schedule" />
+            <PropertyRef Name="city" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="statususer" Type="int" />
+          <Property Name="type" Type="int" />
+          <Property Name="idcategory" Type="int" />
+          <Property Name="idowner" Type="int" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="description" Type="nvarchar(max)" />
+          <Property Name="dateup" Type="date" Nullable="false" />
+          <Property Name="status" Type="int" Nullable="false" />
+          <Property Name="schedule" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="calification" Type="int" />
+          <Property Name="departmentid" Type="int" />
+          <Property Name="city" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_AspNetUserRoles_AspNetRoles">
           <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="0..1" />
@@ -340,10 +358,26 @@
           <EntitySet Name="department" EntityType="Self.department" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="productservice" EntityType="Self.productservice" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="qualificationps" EntityType="Self.qualificationps" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="type_ps" EntityType="Self.type_ps" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="user_state" EntityType="Self.user_state" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="userapp" EntityType="Self.userapp" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ViewProductServices" EntityType="Self.ViewProductServices" store:Type="Views" store:Schema="ricardo">
+            <DefiningQuery>SELECT 
+    [ViewProductServices].[id] AS [id], 
+    [ViewProductServices].[statususer] AS [statususer], 
+    [ViewProductServices].[type] AS [type], 
+    [ViewProductServices].[idcategory] AS [idcategory], 
+    [ViewProductServices].[idowner] AS [idowner], 
+    [ViewProductServices].[name] AS [name], 
+    [ViewProductServices].[description] AS [description], 
+    [ViewProductServices].[dateup] AS [dateup], 
+    [ViewProductServices].[status] AS [status], 
+    [ViewProductServices].[schedule] AS [schedule], 
+    [ViewProductServices].[calification] AS [calification], 
+    [ViewProductServices].[departmentid] AS [departmentid], 
+    [ViewProductServices].[city] AS [city]
+    FROM [ricardo].[ViewProductServices] AS [ViewProductServices]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_AspNetUserRoles_AspNetRoles" Association="Self.FK_AspNetUserRoles_AspNetRoles">
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
@@ -397,38 +431,107 @@
             <End Role="userapp" EntitySet="userapp" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="seletieneModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="seletieneEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C__MigrationHistory" EntityType="seletieneModel.C__MigrationHistory" />
+          <EntitySet Name="AspNetRoles" EntityType="seletieneModel.AspNetRoles" />
+          <EntitySet Name="AspNetUserClaims" EntityType="seletieneModel.AspNetUserClaims" />
+          <EntitySet Name="AspNetUserLogins" EntityType="seletieneModel.AspNetUserLogins" />
+          <EntitySet Name="AspNetUserRoles" EntityType="seletieneModel.AspNetUserRoles" />
+          <EntitySet Name="AspNetUsers" EntityType="seletieneModel.AspNetUsers" />
+          <EntitySet Name="category" EntityType="seletieneModel.category" />
+          <EntitySet Name="city" EntityType="seletieneModel.city" />
+          <EntitySet Name="collective" EntityType="seletieneModel.collective" />
+          <EntitySet Name="department" EntityType="seletieneModel.department" />
+          <EntitySet Name="qualificationps" EntityType="seletieneModel.qualificationps" />
+          <EntitySet Name="type_ps" EntityType="seletieneModel.type_ps" />
+          <EntitySet Name="user_state" EntityType="seletieneModel.user_state" />
+          <EntitySet Name="userapp" EntityType="seletieneModel.userapp" />
+          <AssociationSet Name="FK_AspNetUserRoles_AspNetRoles" Association="seletieneModel.FK_AspNetUserRoles_AspNetRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="seletieneModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="seletieneModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AspNetUserRoles_AspNetUsers" Association="seletieneModel.FK_AspNetUserRoles_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_city_department" Association="seletieneModel.FK_city_department">
+            <End Role="department" EntitySet="department" />
+            <End Role="city" EntitySet="city" />
+          </AssociationSet>
+          <AssociationSet Name="FK_userapp_city" Association="seletieneModel.FK_userapp_city">
+            <End Role="city" EntitySet="city" />
+            <End Role="userapp" EntitySet="userapp" />
+          </AssociationSet>
+          <AssociationSet Name="FK_userapp_collective" Association="seletieneModel.FK_userapp_collective">
+            <End Role="collective" EntitySet="collective" />
+            <End Role="userapp" EntitySet="userapp" />
+          </AssociationSet>
+          <AssociationSet Name="FK_userapp_user_state" Association="seletieneModel.FK_userapp_user_state">
+            <End Role="user_state" EntitySet="user_state" />
+            <End Role="userapp" EntitySet="userapp" />
+          </AssociationSet>
+          <EntitySet Name="ViewProductServices" EntityType="seletieneModel.ViewProductServices" />
+          <EntitySet Name="productservice" EntityType="seletieneModel.productservice" />
+          <AssociationSet Name="FK_productservice_category" Association="seletieneModel.FK_productservice_category">
+            <End Role="category" EntitySet="category" />
+            <End Role="productservice" EntitySet="productservice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_productservice_state" Association="seletieneModel.FK_productservice_state">
+            <End Role="user_state" EntitySet="user_state" />
+            <End Role="productservice" EntitySet="productservice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_productservice_type_ps" Association="seletieneModel.FK_productservice_type_ps">
+            <End Role="type_ps" EntitySet="type_ps" />
+            <End Role="productservice" EntitySet="productservice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_productservice_userapp" Association="seletieneModel.FK_productservice_userapp">
+            <End Role="userapp" EntitySet="userapp" />
+            <End Role="productservice" EntitySet="productservice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_qualificationps_productservice" Association="seletieneModel.FK_qualificationps_productservice">
+            <End Role="productservice" EntitySet="productservice" />
+            <End Role="qualificationps" EntitySet="qualificationps" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="C__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
             <PropertyRef Name="ContextKey" />
           </Key>
-          <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
-          <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MigrationId" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ContextKey" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Model" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="ProductVersion" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="AspNetRoles">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="AspNetUserRoles" Relationship="Self.FK_AspNetUserRoles_AspNetRoles" FromRole="AspNetRoles" ToRole="AspNetUserRoles" />
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUserRoles" Relationship="seletieneModel.FK_AspNetUserRoles_AspNetRoles" FromRole="AspNetRoles" ToRole="AspNetUserRoles" />
         </EntityType>
         <EntityType Name="AspNetUserClaims">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+          <NavigationProperty Name="AspNetUsers" Relationship="seletieneModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
         </EntityType>
         <EntityType Name="AspNetUserLogins">
           <Key>
@@ -436,10 +539,10 @@
             <PropertyRef Name="ProviderKey" />
             <PropertyRef Name="UserId" />
           </Key>
-          <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
+          <Property Name="LoginProvider" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ProviderKey" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="seletieneModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
         </EntityType>
         <EntityType Name="AspNetUserRoles">
           <Key>
@@ -448,14 +551,14 @@
           <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="RoleId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="AspNetRoles" Relationship="Self.FK_AspNetUserRoles_AspNetRoles" FromRole="AspNetUserRoles" ToRole="AspNetRoles" />
-          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_AspNetUserRoles_AspNetUsers" FromRole="AspNetUserRoles" ToRole="AspNetUsers" />
+          <NavigationProperty Name="AspNetRoles" Relationship="seletieneModel.FK_AspNetUserRoles_AspNetRoles" FromRole="AspNetUserRoles" ToRole="AspNetRoles" />
+          <NavigationProperty Name="AspNetUsers" Relationship="seletieneModel.FK_AspNetUserRoles_AspNetUsers" FromRole="AspNetUserRoles" ToRole="AspNetUsers" />
         </EntityType>
         <EntityType Name="AspNetUsers">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
           <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -466,18 +569,18 @@
           <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
           <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
           <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
-          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
-          <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
-          <NavigationProperty Name="AspNetUserRoles" Relationship="Self.FK_AspNetUserRoles_AspNetUsers" FromRole="AspNetUsers" ToRole="AspNetUserRoles" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUserClaims" Relationship="seletieneModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
+          <NavigationProperty Name="AspNetUserLogins" Relationship="seletieneModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+          <NavigationProperty Name="AspNetUserRoles" Relationship="seletieneModel.FK_AspNetUserRoles_AspNetUsers" FromRole="AspNetUsers" ToRole="AspNetUserRoles" />
         </EntityType>
         <EntityType Name="category">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="productservice" Relationship="Self.FK_productservice_category" FromRole="category" ToRole="productservice" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="productservice" Relationship="seletieneModel.FK_productservice_category" FromRole="category" ToRole="productservice" />
         </EntityType>
         <EntityType Name="city">
           <Key>
@@ -487,8 +590,8 @@
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="DepartmentID" Type="Int32" />
           <Property Name="PostalCodeGeo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="department" Relationship="Self.FK_city_department" FromRole="city" ToRole="department" />
-          <NavigationProperty Name="userapp" Relationship="Self.FK_userapp_city" FromRole="city" ToRole="userapp" />
+          <NavigationProperty Name="department" Relationship="seletieneModel.FK_city_department" FromRole="city" ToRole="department" />
+          <NavigationProperty Name="userapp" Relationship="seletieneModel.FK_userapp_city" FromRole="city" ToRole="userapp" />
         </EntityType>
         <EntityType Name="collective">
           <Key>
@@ -496,36 +599,16 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" />
           <Property Name="nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="userapp" Relationship="Self.FK_userapp_collective" FromRole="collective" ToRole="userapp" />
+          <NavigationProperty Name="userapp" Relationship="seletieneModel.FK_userapp_collective" FromRole="collective" ToRole="userapp" />
         </EntityType>
         <EntityType Name="department">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="PostalCodeGeo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="city" Relationship="Self.FK_city_department" FromRole="department" ToRole="city" />
-        </EntityType>
-        <EntityType Name="productservice">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="type" Type="Int32" />
-          <Property Name="idcategory" Type="Int32" />
-          <Property Name="idowner" Type="Int32" />
-          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="dateup" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="status" Type="Int32" Nullable="false" />
-          <Property Name="schedule" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="category" Relationship="Self.FK_productservice_category" FromRole="productservice" ToRole="category" />
-          <NavigationProperty Name="user_state" Relationship="Self.FK_productservice_state" FromRole="productservice" ToRole="user_state" />
-          <NavigationProperty Name="type_ps" Relationship="Self.FK_productservice_type_ps" FromRole="productservice" ToRole="type_ps" />
-          <NavigationProperty Name="userapp" Relationship="Self.FK_productservice_userapp" FromRole="productservice" ToRole="userapp" />
-          <NavigationProperty Name="qualificationps" Relationship="Self.FK_qualificationps_productservice" FromRole="productservice" ToRole="qualificationps" />
+          <NavigationProperty Name="city" Relationship="seletieneModel.FK_city_department" FromRole="department" ToRole="city" />
         </EntityType>
         <EntityType Name="qualificationps">
           <Key>
@@ -536,34 +619,24 @@
           <Property Name="comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="value" Type="Int32" Nullable="false" />
           <Property Name="dateup" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="productservice" Relationship="Self.FK_qualificationps_productservice" FromRole="qualificationps" ToRole="productservice" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="productservice" Relationship="seletieneModel.FK_qualificationps_productservice" FromRole="qualificationps" ToRole="productservice" />
         </EntityType>
         <EntityType Name="type_ps">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="productservice" Relationship="Self.FK_productservice_type_ps" FromRole="type_ps" ToRole="productservice" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="productservice" Relationship="seletieneModel.FK_productservice_type_ps" FromRole="type_ps" ToRole="productservice" />
         </EntityType>
         <EntityType Name="user_state">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="productservice" Relationship="Self.FK_productservice_state" FromRole="user_state" ToRole="productservice" />
-          <NavigationProperty Name="userapp" Relationship="Self.FK_userapp_user_state" FromRole="user_state" ToRole="userapp" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="userapp" Relationship="seletieneModel.FK_userapp_user_state" FromRole="user_state" ToRole="userapp" />
+          <NavigationProperty Name="productservice" Relationship="seletieneModel.FK_productservice_state" FromRole="user_state" ToRole="productservice" />
         </EntityType>
         <EntityType Name="userapp">
           <Key>
@@ -571,9 +644,9 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="id_card" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="name1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="name1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="name2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="lastname1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="lastname1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="lastname2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="birthdate" Type="DateTime" Precision="0" />
           <Property Name="registrationdate" Type="DateTime" Nullable="false" Precision="0" />
@@ -581,18 +654,18 @@
           <Property Name="collective" Type="Int32" />
           <Property Name="telephone" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="cellphone" Type="String" MaxLength="13" FixedLength="false" Unicode="true" />
-          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="passw" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="passw" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="status" Type="Int32" />
           <Property Name="securitystamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="city1" Relationship="Self.FK_userapp_city" FromRole="userapp" ToRole="city" />
-          <NavigationProperty Name="collective1" Relationship="Self.FK_userapp_collective" FromRole="userapp" ToRole="collective" />
-          <NavigationProperty Name="productservice" Relationship="Self.FK_productservice_userapp" FromRole="userapp" ToRole="productservice" />
-          <NavigationProperty Name="user_state" Relationship="Self.FK_userapp_user_state" FromRole="userapp" ToRole="user_state" />
+          <NavigationProperty Name="city1" Relationship="seletieneModel.FK_userapp_city" FromRole="userapp" ToRole="city" />
+          <NavigationProperty Name="collective1" Relationship="seletieneModel.FK_userapp_collective" FromRole="userapp" ToRole="collective" />
+          <NavigationProperty Name="user_state" Relationship="seletieneModel.FK_userapp_user_state" FromRole="userapp" ToRole="user_state" />
+          <NavigationProperty Name="productservice" Relationship="seletieneModel.FK_productservice_userapp" FromRole="userapp" ToRole="productservice" />
         </EntityType>
         <Association Name="FK_AspNetUserRoles_AspNetRoles">
-          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="0..1" />
-          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <End Type="seletieneModel.AspNetRoles" Role="AspNetRoles" Multiplicity="0..1" />
+          <End Type="seletieneModel.AspNetUserRoles" Role="AspNetUserRoles" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetRoles">
               <PropertyRef Name="Id" />
@@ -603,10 +676,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+          <End Type="seletieneModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+          <End Type="seletieneModel.AspNetUserClaims" Role="AspNetUserClaims" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
@@ -617,10 +690,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+          <End Type="seletieneModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+          <End Type="seletieneModel.AspNetUserLogins" Role="AspNetUserLogins" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
@@ -631,8 +704,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_AspNetUserRoles_AspNetUsers">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
-          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <End Type="seletieneModel.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
+          <End Type="seletieneModel.AspNetUserRoles" Role="AspNetUserRoles" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
@@ -642,21 +715,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_productservice_category">
-          <End Role="category" Type="Self.category" Multiplicity="0..1" />
-          <End Role="productservice" Type="Self.productservice" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="category">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="productservice">
-              <PropertyRef Name="idcategory" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_city_department">
-          <End Role="department" Type="Self.department" Multiplicity="0..1" />
-          <End Role="city" Type="Self.city" Multiplicity="*" />
+          <End Type="seletieneModel.department" Role="department" Multiplicity="0..1" />
+          <End Type="seletieneModel.city" Role="city" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="department">
               <PropertyRef Name="ID" />
@@ -667,8 +728,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_userapp_city">
-          <End Role="city" Type="Self.city" Multiplicity="1" />
-          <End Role="userapp" Type="Self.userapp" Multiplicity="*" />
+          <End Type="seletieneModel.city" Role="city" Multiplicity="1" />
+          <End Type="seletieneModel.userapp" Role="userapp" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="city">
               <PropertyRef Name="ID" />
@@ -679,8 +740,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_userapp_collective">
-          <End Role="collective" Type="Self.collective" Multiplicity="0..1" />
-          <End Role="userapp" Type="Self.userapp" Multiplicity="*" />
+          <End Type="seletieneModel.collective" Role="collective" Multiplicity="0..1" />
+          <End Type="seletieneModel.userapp" Role="userapp" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="collective">
               <PropertyRef Name="id" />
@@ -690,9 +751,79 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_userapp_user_state">
+          <End Type="seletieneModel.user_state" Role="user_state" Multiplicity="0..1" />
+          <End Type="seletieneModel.userapp" Role="userapp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user_state">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="userapp">
+              <PropertyRef Name="status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ViewProductServices">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="dateup" />
+            <PropertyRef Name="status" />
+            <PropertyRef Name="schedule" />
+            <PropertyRef Name="city" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="statususer" Type="Int32" />
+          <Property Name="type" Type="Int32" />
+          <Property Name="idcategory" Type="Int32" />
+          <Property Name="idowner" Type="Int32" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="dateup" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="status" Type="Int32" Nullable="false" />
+          <Property Name="schedule" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="calification" Type="Int32" />
+          <Property Name="departmentid" Type="Int32" />
+          <Property Name="city" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="productservice">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="type" Type="Int32" />
+          <Property Name="idcategory" Type="Int32" />
+          <Property Name="idowner" Type="Int32" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="dateup" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="status" Type="Int32" Nullable="false" />
+          <Property Name="schedule" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="calification" Type="Double" />
+          <Property Name="depto" Type="Int32" />
+          <Property Name="city" Type="Int32" />
+          <NavigationProperty Name="category" Relationship="seletieneModel.FK_productservice_category" FromRole="productservice" ToRole="category" />
+          <NavigationProperty Name="user_state" Relationship="seletieneModel.FK_productservice_state" FromRole="productservice" ToRole="user_state" />
+          <NavigationProperty Name="type_ps" Relationship="seletieneModel.FK_productservice_type_ps" FromRole="productservice" ToRole="type_ps" />
+          <NavigationProperty Name="userapp" Relationship="seletieneModel.FK_productservice_userapp" FromRole="productservice" ToRole="userapp" />
+          <NavigationProperty Name="qualificationps" Relationship="seletieneModel.FK_qualificationps_productservice" FromRole="productservice" ToRole="qualificationps" />
+        </EntityType>
+        <Association Name="FK_productservice_category">
+          <End Type="seletieneModel.category" Role="category" Multiplicity="0..1" />
+          <End Type="seletieneModel.productservice" Role="productservice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="productservice">
+              <PropertyRef Name="idcategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_productservice_state">
-          <End Role="user_state" Type="Self.user_state" Multiplicity="1" />
-          <End Role="productservice" Type="Self.productservice" Multiplicity="*" />
+          <End Type="seletieneModel.user_state" Role="user_state" Multiplicity="1" />
+          <End Type="seletieneModel.productservice" Role="productservice" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="user_state">
               <PropertyRef Name="id" />
@@ -703,8 +834,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_productservice_type_ps">
-          <End Role="type_ps" Type="Self.type_ps" Multiplicity="0..1" />
-          <End Role="productservice" Type="Self.productservice" Multiplicity="*" />
+          <End Type="seletieneModel.type_ps" Role="type_ps" Multiplicity="0..1" />
+          <End Type="seletieneModel.productservice" Role="productservice" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="type_ps">
               <PropertyRef Name="id" />
@@ -715,8 +846,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_productservice_userapp">
-          <End Role="userapp" Type="Self.userapp" Multiplicity="0..1" />
-          <End Role="productservice" Type="Self.productservice" Multiplicity="*" />
+          <End Type="seletieneModel.userapp" Role="userapp" Multiplicity="0..1" />
+          <End Type="seletieneModel.productservice" Role="productservice" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="userapp">
               <PropertyRef Name="id" />
@@ -727,8 +858,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_qualificationps_productservice">
-          <End Role="productservice" Type="Self.productservice" Multiplicity="0..1" />
-          <End Role="qualificationps" Type="Self.qualificationps" Multiplicity="*" />
+          <End Type="seletieneModel.productservice" Role="productservice" Multiplicity="0..1" />
+          <End Type="seletieneModel.qualificationps" Role="qualificationps" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="productservice">
               <PropertyRef Name="id" />
@@ -738,88 +869,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_userapp_user_state">
-          <End Role="user_state" Type="Self.user_state" Multiplicity="0..1" />
-          <End Role="userapp" Type="Self.userapp" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="user_state">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="userapp">
-              <PropertyRef Name="status" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityContainer Name="seletieneEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
-          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" />
-          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" />
-          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" />
-          <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" />
-          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" />
-          <EntitySet Name="category" EntityType="Self.category" />
-          <EntitySet Name="city" EntityType="Self.city" />
-          <EntitySet Name="collective" EntityType="Self.collective" />
-          <EntitySet Name="department" EntityType="Self.department" />
-          <EntitySet Name="productservice" EntityType="Self.productservice" />
-          <EntitySet Name="qualificationps" EntityType="Self.qualificationps" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
-          <EntitySet Name="type_ps" EntityType="Self.type_ps" />
-          <EntitySet Name="user_state" EntityType="Self.user_state" />
-          <EntitySet Name="userapp" EntityType="Self.userapp" />
-          <AssociationSet Name="FK_AspNetUserRoles_AspNetRoles" Association="Self.FK_AspNetUserRoles_AspNetRoles">
-            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
-            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AspNetUserRoles_AspNetUsers" Association="Self.FK_AspNetUserRoles_AspNetUsers">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_productservice_category" Association="Self.FK_productservice_category">
-            <End Role="category" EntitySet="category" />
-            <End Role="productservice" EntitySet="productservice" />
-          </AssociationSet>
-          <AssociationSet Name="FK_city_department" Association="Self.FK_city_department">
-            <End Role="department" EntitySet="department" />
-            <End Role="city" EntitySet="city" />
-          </AssociationSet>
-          <AssociationSet Name="FK_userapp_city" Association="Self.FK_userapp_city">
-            <End Role="city" EntitySet="city" />
-            <End Role="userapp" EntitySet="userapp" />
-          </AssociationSet>
-          <AssociationSet Name="FK_userapp_collective" Association="Self.FK_userapp_collective">
-            <End Role="collective" EntitySet="collective" />
-            <End Role="userapp" EntitySet="userapp" />
-          </AssociationSet>
-          <AssociationSet Name="FK_productservice_state" Association="Self.FK_productservice_state">
-            <End Role="user_state" EntitySet="user_state" />
-            <End Role="productservice" EntitySet="productservice" />
-          </AssociationSet>
-          <AssociationSet Name="FK_productservice_type_ps" Association="Self.FK_productservice_type_ps">
-            <End Role="type_ps" EntitySet="type_ps" />
-            <End Role="productservice" EntitySet="productservice" />
-          </AssociationSet>
-          <AssociationSet Name="FK_productservice_userapp" Association="Self.FK_productservice_userapp">
-            <End Role="userapp" EntitySet="userapp" />
-            <End Role="productservice" EntitySet="productservice" />
-          </AssociationSet>
-          <AssociationSet Name="FK_qualificationps_productservice" Association="Self.FK_qualificationps_productservice">
-            <End Role="productservice" EntitySet="productservice" />
-            <End Role="qualificationps" EntitySet="qualificationps" />
-          </AssociationSet>
-          <AssociationSet Name="FK_userapp_user_state" Association="Self.FK_userapp_user_state">
-            <End Role="user_state" EntitySet="user_state" />
-            <End Role="userapp" EntitySet="userapp" />
-          </AssociationSet>
-        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -829,175 +878,186 @@
           <EntitySetMapping Name="C__MigrationHistory">
             <EntityTypeMapping TypeName="seletieneModel.C__MigrationHistory">
               <MappingFragment StoreEntitySet="__MigrationHistory">
-                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
-                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
-                <ScalarProperty Name="Model" ColumnName="Model" />
                 <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetRoles">
             <EntityTypeMapping TypeName="seletieneModel.AspNetRoles">
               <MappingFragment StoreEntitySet="AspNetRoles">
-                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserClaims">
             <EntityTypeMapping TypeName="seletieneModel.AspNetUserClaims">
               <MappingFragment StoreEntitySet="AspNetUserClaims">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
                 <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserLogins">
             <EntityTypeMapping TypeName="seletieneModel.AspNetUserLogins">
               <MappingFragment StoreEntitySet="AspNetUserLogins">
-                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
-                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserRoles">
             <EntityTypeMapping TypeName="seletieneModel.AspNetUserRoles">
               <MappingFragment StoreEntitySet="AspNetUserRoles">
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
                 <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUsers">
             <EntityTypeMapping TypeName="seletieneModel.AspNetUsers">
               <MappingFragment StoreEntitySet="AspNetUsers">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
-                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
-                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
-                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
-                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
-                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
-                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="category">
             <EntityTypeMapping TypeName="seletieneModel.category">
               <MappingFragment StoreEntitySet="category">
-                <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="city">
             <EntityTypeMapping TypeName="seletieneModel.city">
               <MappingFragment StoreEntitySet="city">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
                 <ScalarProperty Name="PostalCodeGeo" ColumnName="PostalCodeGeo" />
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="collective">
             <EntityTypeMapping TypeName="seletieneModel.collective">
               <MappingFragment StoreEntitySet="collective">
-                <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="department">
             <EntityTypeMapping TypeName="seletieneModel.department">
               <MappingFragment StoreEntitySet="department">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="PostalCodeGeo" ColumnName="PostalCodeGeo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="productservice">
-            <EntityTypeMapping TypeName="seletieneModel.productservice">
-              <MappingFragment StoreEntitySet="productservice">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="type" ColumnName="type" />
-                <ScalarProperty Name="idcategory" ColumnName="idcategory" />
-                <ScalarProperty Name="idowner" ColumnName="idowner" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="dateup" ColumnName="dateup" />
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="schedule" ColumnName="schedule" />
-                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="qualificationps">
             <EntityTypeMapping TypeName="seletieneModel.qualificationps">
               <MappingFragment StoreEntitySet="qualificationps">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="idproduct" ColumnName="idproduct" />
-                <ScalarProperty Name="comment" ColumnName="comment" />
-                <ScalarProperty Name="value" ColumnName="value" />
                 <ScalarProperty Name="dateup" ColumnName="dateup" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="seletieneModel.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="comment" ColumnName="comment" />
+                <ScalarProperty Name="idproduct" ColumnName="idproduct" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="type_ps">
             <EntityTypeMapping TypeName="seletieneModel.type_ps">
               <MappingFragment StoreEntitySet="type_ps">
-                <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="user_state">
             <EntityTypeMapping TypeName="seletieneModel.user_state">
               <MappingFragment StoreEntitySet="user_state">
-                <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="userapp">
             <EntityTypeMapping TypeName="seletieneModel.userapp">
               <MappingFragment StoreEntitySet="userapp">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="id_card" ColumnName="id_card" />
-                <ScalarProperty Name="name1" ColumnName="name1" />
-                <ScalarProperty Name="name2" ColumnName="name2" />
-                <ScalarProperty Name="lastname1" ColumnName="lastname1" />
-                <ScalarProperty Name="lastname2" ColumnName="lastname2" />
-                <ScalarProperty Name="birthdate" ColumnName="birthdate" />
-                <ScalarProperty Name="registrationdate" ColumnName="registrationdate" />
-                <ScalarProperty Name="city" ColumnName="city" />
-                <ScalarProperty Name="collective" ColumnName="collective" />
-                <ScalarProperty Name="telephone" ColumnName="telephone" />
-                <ScalarProperty Name="cellphone" ColumnName="cellphone" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="passw" ColumnName="passw" />
-                <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="securitystamp" ColumnName="securitystamp" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="passw" ColumnName="passw" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="cellphone" ColumnName="cellphone" />
+                <ScalarProperty Name="telephone" ColumnName="telephone" />
+                <ScalarProperty Name="collective" ColumnName="collective" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="registrationdate" ColumnName="registrationdate" />
+                <ScalarProperty Name="birthdate" ColumnName="birthdate" />
+                <ScalarProperty Name="lastname2" ColumnName="lastname2" />
+                <ScalarProperty Name="lastname1" ColumnName="lastname1" />
+                <ScalarProperty Name="name2" ColumnName="name2" />
+                <ScalarProperty Name="name1" ColumnName="name1" />
+                <ScalarProperty Name="id_card" ColumnName="id_card" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ViewProductServices">
+            <EntityTypeMapping TypeName="seletieneModel.ViewProductServices">
+              <MappingFragment StoreEntitySet="ViewProductServices">
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="departmentid" ColumnName="departmentid" />
+                <ScalarProperty Name="calification" ColumnName="calification" />
+                <ScalarProperty Name="schedule" ColumnName="schedule" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="dateup" ColumnName="dateup" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="idowner" ColumnName="idowner" />
+                <ScalarProperty Name="idcategory" ColumnName="idcategory" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="statususer" ColumnName="statususer" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="productservice">
+            <EntityTypeMapping TypeName="seletieneModel.productservice">
+              <MappingFragment StoreEntitySet="productservice">
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="depto" ColumnName="depto" />
+                <ScalarProperty Name="calification" ColumnName="calification" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="schedule" ColumnName="schedule" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="dateup" ColumnName="dateup" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="idowner" ColumnName="idowner" />
+                <ScalarProperty Name="idcategory" ColumnName="idcategory" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

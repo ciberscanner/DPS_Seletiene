@@ -12,18 +12,20 @@ namespace DPS_Seletiene.data
     using System;
     using System.Collections.Generic;
     
-    public partial class type_ps
+    public partial class ViewProductServices
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public type_ps()
-        {
-            this.productservice = new HashSet<productservice>();
-        }
-    
         public int id { get; set; }
+        public Nullable<int> statususer { get; set; }
+        public Nullable<int> type { get; set; }
+        public Nullable<int> idcategory { get; set; }
+        public Nullable<int> idowner { get; set; }
         public string name { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<productservice> productservice { get; set; }
+        public string description { get; set; }
+        public System.DateTime dateup { get; set; }
+        public int status { get; set; }
+        public string schedule { get; set; }
+        public Nullable<int> calification { get; set; }
+        public Nullable<int> departmentid { get; set; }
+        public int city { get; set; }
     }
 }

@@ -19,11 +19,12 @@ namespace DPS_Seletiene.Controllers.api
         private seletieneEntities db = new seletieneEntities();
 
         // GET: api/productservices
-        public IQueryable<productservice> Getproductservice()
+        public IQueryable<ViewProductServices> Getproductservice()
 
         {
             db.Configuration.LazyLoadingEnabled = false;
-            return db.productservice.Where(r => r.userapp.status == 2).Where(r=>r.status==2);
+           
+            return db.ViewProductServices.Where(r => r.statususer == 2).Where(r=>r.status==2);
         }
           
         [System.Web.Http.HttpGet]
@@ -52,9 +53,11 @@ namespace DPS_Seletiene.Controllers.api
     (from ord in db.qualificationps.Where(r=>r.idproduct==idproduct)
      select ord.value )
     .Average();
+    
             return (double)averageFreight;
-         
+            
 
+     
         }
 
         [System.Web.Http.HttpGet]
@@ -71,12 +74,12 @@ namespace DPS_Seletiene.Controllers.api
             db.qualificationps.Add(rate);
             db.SaveChanges();
             db.Configuration.LazyLoadingEnabled = false;
-            System.Nullable<Double> average =
-    (from ord in db.qualificationps.Where(r => r.idproduct == idpproducto)
-     select ord.value)
-    .Average();
+          
             productservice product = db.productservice.Find(idpproducto);
-           // product.quality = average.ToString();
+            product.calification = productqualitity(idpproducto);
+            db.Entry(product).State = EntityState.Modified;
+            db.SaveChanges();
+            
             return Ok(rate);
         }
 
@@ -137,6 +140,7 @@ namespace DPS_Seletiene.Controllers.api
             productservice.status = 1;
             try
             {
+           
                 db.productservice.Add(productservice);
                 db.SaveChanges();
             }
