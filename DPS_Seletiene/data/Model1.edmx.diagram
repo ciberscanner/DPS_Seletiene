@@ -27,13 +27,13 @@
         <AssociationConnector Association="seletieneModel.FK_userapp_city" />
         <AssociationConnector Association="seletieneModel.FK_userapp_collective" />
         <AssociationConnector Association="seletieneModel.FK_userapp_user_state" />
-        <EntityTypeShape EntityType="seletieneModel.ViewProductServices" Width="1.5" PointX="6.375" PointY="0.75" />
         <EntityTypeShape EntityType="seletieneModel.productservice" Width="1.5" PointX="5.25" PointY="8" />
         <AssociationConnector Association="seletieneModel.FK_productservice_category" />
         <AssociationConnector Association="seletieneModel.FK_productservice_state" />
         <AssociationConnector Association="seletieneModel.FK_productservice_type_ps" />
         <AssociationConnector Association="seletieneModel.FK_productservice_userapp" />
         <AssociationConnector Association="seletieneModel.FK_qualificationps_productservice" />
+        <EntityTypeShape EntityType="seletieneModel.ViewProductServices" Width="1.5" PointX="6.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

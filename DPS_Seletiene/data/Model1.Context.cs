@@ -39,7 +39,7 @@ namespace DPS_Seletiene.data
         public virtual DbSet<type_ps> type_ps { get; set; }
         public virtual DbSet<user_state> user_state { get; set; }
         public virtual DbSet<userapp> userapp { get; set; }
-        public virtual DbSet<ViewProductServices> ViewProductServices { get; set; }
         public virtual DbSet<productservice> productservice { get; set; }
+        public virtual DbSet<ViewProductServices> ViewProductServices { get; set; }
     }
 }

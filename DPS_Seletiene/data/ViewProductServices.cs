@@ -24,7 +24,7 @@ namespace DPS_Seletiene.data
         public System.DateTime dateup { get; set; }
         public int status { get; set; }
         public string schedule { get; set; }
-        public Nullable<int> calification { get; set; }
+        public Nullable<double> calification { get; set; }
         public Nullable<int> departmentid { get; set; }
         public int city { get; set; }
     }

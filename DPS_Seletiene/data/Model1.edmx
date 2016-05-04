@@ -181,7 +181,7 @@ warning 6002: The table/view 'seletiene.ricardo.ViewProductServices' does not ha
           <Property Name="dateup" Type="date" Nullable="false" />
           <Property Name="status" Type="int" Nullable="false" />
           <Property Name="schedule" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="calification" Type="int" />
+          <Property Name="calification" Type="float" />
           <Property Name="departmentid" Type="int" />
           <Property Name="city" Type="int" Nullable="false" />
         </EntityType>
@@ -482,7 +482,6 @@ warning 6002: The table/view 'seletiene.ricardo.ViewProductServices' does not ha
             <End Role="user_state" EntitySet="user_state" />
             <End Role="userapp" EntitySet="userapp" />
           </AssociationSet>
-          <EntitySet Name="ViewProductServices" EntityType="seletieneModel.ViewProductServices" />
           <EntitySet Name="productservice" EntityType="seletieneModel.productservice" />
           <AssociationSet Name="FK_productservice_category" Association="seletieneModel.FK_productservice_category">
             <End Role="category" EntitySet="category" />
@@ -504,6 +503,7 @@ warning 6002: The table/view 'seletiene.ricardo.ViewProductServices' does not ha
             <End Role="productservice" EntitySet="productservice" />
             <End Role="qualificationps" EntitySet="qualificationps" />
           </AssociationSet>
+          <EntitySet Name="ViewProductServices" EntityType="seletieneModel.ViewProductServices" />
         </EntityContainer>
         <EntityType Name="C__MigrationHistory">
           <Key>
@@ -763,29 +763,6 @@ warning 6002: The table/view 'seletiene.ricardo.ViewProductServices' does not ha
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="ViewProductServices">
-          <Key>
-            <PropertyRef Name="id" />
-            <PropertyRef Name="name" />
-            <PropertyRef Name="dateup" />
-            <PropertyRef Name="status" />
-            <PropertyRef Name="schedule" />
-            <PropertyRef Name="city" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="statususer" Type="Int32" />
-          <Property Name="type" Type="Int32" />
-          <Property Name="idcategory" Type="Int32" />
-          <Property Name="idowner" Type="Int32" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="dateup" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="status" Type="Int32" Nullable="false" />
-          <Property Name="schedule" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="calification" Type="Int32" />
-          <Property Name="departmentid" Type="Int32" />
-          <Property Name="city" Type="Int32" Nullable="false" />
-        </EntityType>
         <EntityType Name="productservice">
           <Key>
             <PropertyRef Name="id" />
@@ -869,6 +846,29 @@ warning 6002: The table/view 'seletiene.ricardo.ViewProductServices' does not ha
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ViewProductServices">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="dateup" />
+            <PropertyRef Name="status" />
+            <PropertyRef Name="schedule" />
+            <PropertyRef Name="city" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="statususer" Type="Int32" />
+          <Property Name="type" Type="Int32" />
+          <Property Name="idcategory" Type="Int32" />
+          <Property Name="idowner" Type="Int32" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="dateup" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="status" Type="Int32" Nullable="false" />
+          <Property Name="schedule" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="calification" Type="Double" />
+          <Property Name="departmentid" Type="Int32" />
+          <Property Name="city" Type="Int32" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1023,25 +1023,6 @@ warning 6002: The table/view 'seletiene.ricardo.ViewProductServices' does not ha
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ViewProductServices">
-            <EntityTypeMapping TypeName="seletieneModel.ViewProductServices">
-              <MappingFragment StoreEntitySet="ViewProductServices">
-                <ScalarProperty Name="city" ColumnName="city" />
-                <ScalarProperty Name="departmentid" ColumnName="departmentid" />
-                <ScalarProperty Name="calification" ColumnName="calification" />
-                <ScalarProperty Name="schedule" ColumnName="schedule" />
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="dateup" ColumnName="dateup" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="idowner" ColumnName="idowner" />
-                <ScalarProperty Name="idcategory" ColumnName="idcategory" />
-                <ScalarProperty Name="type" ColumnName="type" />
-                <ScalarProperty Name="statususer" ColumnName="statususer" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="productservice">
             <EntityTypeMapping TypeName="seletieneModel.productservice">
               <MappingFragment StoreEntitySet="productservice">
@@ -1057,6 +1038,25 @@ warning 6002: The table/view 'seletiene.ricardo.ViewProductServices' does not ha
                 <ScalarProperty Name="idowner" ColumnName="idowner" />
                 <ScalarProperty Name="idcategory" ColumnName="idcategory" />
                 <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ViewProductServices">
+            <EntityTypeMapping TypeName="seletieneModel.ViewProductServices">
+              <MappingFragment StoreEntitySet="ViewProductServices">
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="departmentid" ColumnName="departmentid" />
+                <ScalarProperty Name="calification" ColumnName="calification" />
+                <ScalarProperty Name="schedule" ColumnName="schedule" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="dateup" ColumnName="dateup" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="idowner" ColumnName="idowner" />
+                <ScalarProperty Name="idcategory" ColumnName="idcategory" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="statususer" ColumnName="statususer" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
