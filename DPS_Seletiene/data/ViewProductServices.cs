@@ -27,5 +27,6 @@ namespace DPS_Seletiene.data
         public Nullable<double> calification { get; set; }
         public Nullable<int> departmentid { get; set; }
         public int city { get; set; }
+        public string imagen { get; set; }
     }
 }

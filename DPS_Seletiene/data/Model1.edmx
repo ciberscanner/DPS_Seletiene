@@ -184,6 +184,7 @@ warning 6002: The table/view 'seletiene.ricardo.ViewProductServices' does not ha
           <Property Name="calification" Type="float" />
           <Property Name="departmentid" Type="int" />
           <Property Name="city" Type="int" Nullable="false" />
+          <Property Name="imagen" Type="varchar(max)" />
         </EntityType>
         <Association Name="FK_AspNetUserRoles_AspNetRoles">
           <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="0..1" />
@@ -375,7 +376,8 @@ warning 6002: The table/view 'seletiene.ricardo.ViewProductServices' does not ha
     [ViewProductServices].[schedule] AS [schedule], 
     [ViewProductServices].[calification] AS [calification], 
     [ViewProductServices].[departmentid] AS [departmentid], 
-    [ViewProductServices].[city] AS [city]
+    [ViewProductServices].[city] AS [city], 
+    [ViewProductServices].[imagen] AS [imagen]
     FROM [ricardo].[ViewProductServices] AS [ViewProductServices]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_AspNetUserRoles_AspNetRoles" Association="Self.FK_AspNetUserRoles_AspNetRoles">
@@ -868,6 +870,7 @@ warning 6002: The table/view 'seletiene.ricardo.ViewProductServices' does not ha
           <Property Name="calification" Type="Double" />
           <Property Name="departmentid" Type="Int32" />
           <Property Name="city" Type="Int32" Nullable="false" />
+          <Property Name="imagen" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1045,6 +1048,7 @@ warning 6002: The table/view 'seletiene.ricardo.ViewProductServices' does not ha
           <EntitySetMapping Name="ViewProductServices">
             <EntityTypeMapping TypeName="seletieneModel.ViewProductServices">
               <MappingFragment StoreEntitySet="ViewProductServices">
+                <ScalarProperty Name="imagen" ColumnName="imagen" />
                 <ScalarProperty Name="city" ColumnName="city" />
                 <ScalarProperty Name="departmentid" ColumnName="departmentid" />
                 <ScalarProperty Name="calification" ColumnName="calification" />
