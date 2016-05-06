@@ -20,6 +20,8 @@ namespace DPS_Seletiene.Controllers.api
         [System.Web.Http.HttpGet]
         public IQueryable<city> GetcitybyDepartament(int iddepartament)
         {
+            db.Configuration.LazyLoadingEnabled = false; 
+
             return db.city.Where(r=>r.DepartmentID==iddepartament);
         }
 

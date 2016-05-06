@@ -144,22 +144,27 @@ namespace DPS_Seletiene.Controllers.api
             productservice.status = 1;
             try
             {
-                var myString = productservice.image.Split(new char[] { ',' });
-                byte[] bytes = Convert.FromBase64String(myString[1]); using (MemoryStream ms = new MemoryStream(bytes))
+                if (productservice.image != null)
                 {
-                    try{
-                  //      Image image = Image.FromStream(ms);
-                        string path1 = string.Format("{0}/{1}{2}", System.Web.HttpContext.Current.Server.MapPath("~/Images/"), "image_", productservice.name+".jpg");
-
-//                        image.Save("./Image.jpg", ImageFormat.Jpeg);
-                        File.WriteAllBytes(path1, bytes);
-                    }
-                    catch(Exception ce)
+                    var myString = productservice.image.Split(new char[] { ',' });
+                    byte[] bytes = Convert.FromBase64String(myString[1]); using (MemoryStream ms = new MemoryStream(bytes))
                     {
-                        Console.WriteLine("");
+                        try
+                        {
+                            //      Image image = Image.FromStream(ms);
+                            string path1 = string.Format("{0}/{1}{2}", System.Web.HttpContext.Current.Server.MapPath("~/Images/"), "image_", productservice.name + ".jpg");
+
+                            //                        image.Save("./Image.jpg", ImageFormat.Jpeg);
+                            File.WriteAllBytes(path1, bytes);
+                        }
+                        catch (Exception ce)
+                        {
+                            Console.WriteLine("");
+                        }
                     }
+
+                   
                 }
-                
                 db.productservice.Add(productservice);
                 db.SaveChanges();
             }
@@ -176,6 +181,8 @@ namespace DPS_Seletiene.Controllers.api
                     }
                 }
                 throw;
+
+
             }
             return CreatedAtRoute("DefaultApi", new { id = productservice.id }, productservice);
         }

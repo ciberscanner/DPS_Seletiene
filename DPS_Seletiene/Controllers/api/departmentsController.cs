@@ -19,7 +19,18 @@ namespace DPS_Seletiene.Controllers.api
         // GET: api/ 
         public IQueryable<department> Getdepartment()
         {
-            return db.department;
+            db.Configuration.LazyLoadingEnabled = false; 
+
+            try
+            {
+                return db.department;
+
+            }
+            catch(Exception e)
+            {
+                return null;
+                Console.WriteLine("");
+            }
         }
 
         // GET: api/departments/5
