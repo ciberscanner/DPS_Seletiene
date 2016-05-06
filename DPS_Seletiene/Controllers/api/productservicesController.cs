@@ -11,6 +11,9 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using System.Data.Entity.Validation;
 using DPS_Seletiene.data;
+using System.IO;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace DPS_Seletiene.Controllers.api
 {
@@ -94,7 +97,8 @@ namespace DPS_Seletiene.Controllers.api
             db.SaveChanges();
             return Ok(productservice);
         }
-         
+             [HttpPut]
+
         // PUT: api/productservices/5
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> Putproductservice(int id, productservice productservice)
@@ -140,7 +144,22 @@ namespace DPS_Seletiene.Controllers.api
             productservice.status = 1;
             try
             {
-           
+                var myString = productservice.image.Split(new char[] { ',' });
+                byte[] bytes = Convert.FromBase64String(myString[1]); using (MemoryStream ms = new MemoryStream(bytes))
+                {
+                    try{
+                  //      Image image = Image.FromStream(ms);
+                        string path1 = string.Format("{0}/{1}{2}", System.Web.HttpContext.Current.Server.MapPath("~/Images/"), "image_", productservice.name+".jpg");
+
+//                        image.Save("./Image.jpg", ImageFormat.Jpeg);
+                        File.WriteAllBytes(path1, bytes);
+                    }
+                    catch(Exception ce)
+                    {
+                        Console.WriteLine("");
+                    }
+                }
+                
                 db.productservice.Add(productservice);
                 db.SaveChanges();
             }

@@ -47,15 +47,18 @@ namespace DPS_Seletiene.Controllers.api
        
         [System.Web.Http.HttpGet]
         [ResponseType(typeof(userapp))]
-        public userapp Actualizar(int  id, string telephone,string cellphone,string email)
+        public userapp Actualizar(int  id, string telephone,string cellphone,string email,string contrasena)
         {
             userapp user = db.userapp.Find(id);
-            if (user == null)
+            if (user != null)
             {
                 user.telephone = telephone;
                 user.cellphone = cellphone;
                 user.email = email;
-                 db.Entry(user).State = EntityState.Modified;
+                user.passw = MD5Manager.Encrypt(contrasena, true);
+
+              
+                db.Entry(user).State = EntityState.Modified;
 
             
             
