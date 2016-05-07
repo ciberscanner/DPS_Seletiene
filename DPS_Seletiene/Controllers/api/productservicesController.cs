@@ -103,6 +103,7 @@ namespace DPS_Seletiene.Controllers.api
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> Putproductservice(int id, productservice productservice)
         {
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -137,6 +138,8 @@ namespace DPS_Seletiene.Controllers.api
         // POST: api/productservices
         public IHttpActionResult Postproductservice(productservice productservice)
         {
+            db.Configuration.LazyLoadingEnabled = false; 
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);

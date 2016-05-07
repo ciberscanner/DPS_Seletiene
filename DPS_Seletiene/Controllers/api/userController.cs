@@ -49,6 +49,8 @@ namespace DPS_Seletiene.Controllers.api
         [ResponseType(typeof(userapp))]
         public userapp Actualizar(int  id, string telephone,string cellphone,string email,string contrasena)
         {
+            db.Configuration.LazyLoadingEnabled = false; 
+
             userapp user = db.userapp.Find(id);
             if (user != null)
             {
@@ -74,6 +76,8 @@ namespace DPS_Seletiene.Controllers.api
         [System.Web.Http.HttpGet]
         public Task<HttpResponseMessage> Resetpass(string email)
         {
+            db.Configuration.LazyLoadingEnabled = false; 
+
             List<userapp> user = db.userapp.Where(r => r.email.Equals(email)).ToList();
             if (user.Count > 0)
             {
@@ -215,7 +219,8 @@ namespace DPS_Seletiene.Controllers.api
         [ResponseType(typeof(userapp))]
         public async Task<IHttpActionResult> Postuserapp(userapp userapp)
         {
-           
+            db.Configuration.LazyLoadingEnabled = false; 
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
