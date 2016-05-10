@@ -155,7 +155,7 @@ namespace DPS_Seletiene.Controllers.api
                         try
                         {
                             //      Image image = Image.FromStream(ms);
-                            string path1 = string.Format("{0}/{1}{2}", System.Web.HttpContext.Current.Server.MapPath("~/Images/"), "image_", productservice.name + ".jpg");
+                            string path1 = string.Format("{0}/{1}{2}", System.Web.HttpContext.Current.Server.MapPath("~/Images/"), "image_", productservice.name +DateTime.Now +".jpg");
 
                             //                        image.Save("./Image.jpg", ImageFormat.Jpeg);
                             File.WriteAllBytes(path1, bytes);

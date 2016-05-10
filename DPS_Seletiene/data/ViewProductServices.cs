@@ -15,6 +15,8 @@ namespace DPS_Seletiene.data
     public partial class ViewProductServices
     {
         public int id { get; set; }
+        public string nombre { get; set; }
+        public string apellido { get; set; }
         public Nullable<int> statususer { get; set; }
         public Nullable<int> type { get; set; }
         public Nullable<int> idcategory { get; set; }

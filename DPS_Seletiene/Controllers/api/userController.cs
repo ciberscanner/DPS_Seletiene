@@ -44,7 +44,12 @@ namespace DPS_Seletiene.Controllers.api
 
               return null;
         }
-       
+
+
+
+        
+
+
         [System.Web.Http.HttpGet]
         [ResponseType(typeof(userapp))]
         public userapp Actualizar(int  id, string telephone,string cellphone,string email,string contrasena)
@@ -59,7 +64,7 @@ namespace DPS_Seletiene.Controllers.api
                 user.email = email;
                 user.passw = MD5Manager.Encrypt(contrasena, true);
 
-              
+                string pass = MD5Manager.Encrypt(contrasena, true);
                 db.Entry(user).State = EntityState.Modified;
 
             
@@ -121,17 +126,17 @@ namespace DPS_Seletiene.Controllers.api
         public void sendemail(userapp user, string email)
         {
             user.passw = CreatePassword(6);
-            user.passw = MD5Manager.Encrypt(user.passw, true);
-
-            db.Entry(user).State = EntityState.Modified;
-            db.SaveChanges();
+         
                 
             var fromAddress = new MailAddress("info@salud.ucaldas.edu.co", "Se le tiene");
             var toAddress = new MailAddress(user.email, "To Name");
             const string fromPassword = "descargar";
             const string subject = "Cambio de contraseña";
             string body = "<h3>Cordial saludo</h3><h3 style=\"text-align: justify;\">Tu nueva contraseña es " + user.passw + "</p>";
+            user.passw = MD5Manager.Encrypt(user.passw, true);
 
+            db.Entry(user).State = EntityState.Modified;
+            db.SaveChanges();
             try
             {
 
@@ -169,7 +174,7 @@ namespace DPS_Seletiene.Controllers.api
         }
         // GET: api/userappApi/5
         [ResponseType(typeof(userapp))]
-        public async Task<IHttpActionResult> Getuserapp(int id)
+        public async Task<IHttpActionResult> Getuser(int id)
         {
             userapp userapp = await db.userapp.FindAsync(id);
             if (userapp == null)
@@ -179,8 +184,7 @@ namespace DPS_Seletiene.Controllers.api
 
             return Ok(userapp);
         }
-
-        // PUT: api/userappApi/5
+          [System.Web.Http.HttpGet]         
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> Putuserapp(int id, userapp userapp)
         {

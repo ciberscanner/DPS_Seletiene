@@ -165,6 +165,8 @@ warning 6002: The table/view 'seletiene.ricardo.ViewProductServices' does not ha
         <EntityType Name="ViewProductServices">
           <Key>
             <PropertyRef Name="id" />
+            <PropertyRef Name="nombre" />
+            <PropertyRef Name="apellido" />
             <PropertyRef Name="name" />
             <PropertyRef Name="dateup" />
             <PropertyRef Name="status" />
@@ -172,6 +174,8 @@ warning 6002: The table/view 'seletiene.ricardo.ViewProductServices' does not ha
             <PropertyRef Name="city" />
           </Key>
           <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="apellido" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="statususer" Type="int" />
           <Property Name="type" Type="int" />
           <Property Name="idcategory" Type="int" />
@@ -365,6 +369,8 @@ warning 6002: The table/view 'seletiene.ricardo.ViewProductServices' does not ha
           <EntitySet Name="ViewProductServices" EntityType="Self.ViewProductServices" store:Type="Views" store:Schema="ricardo">
             <DefiningQuery>SELECT 
     [ViewProductServices].[id] AS [id], 
+    [ViewProductServices].[nombre] AS [nombre], 
+    [ViewProductServices].[apellido] AS [apellido], 
     [ViewProductServices].[statususer] AS [statususer], 
     [ViewProductServices].[type] AS [type], 
     [ViewProductServices].[idcategory] AS [idcategory], 
@@ -851,6 +857,8 @@ warning 6002: The table/view 'seletiene.ricardo.ViewProductServices' does not ha
         <EntityType Name="ViewProductServices">
           <Key>
             <PropertyRef Name="id" />
+            <PropertyRef Name="nombre" />
+            <PropertyRef Name="apellido" />
             <PropertyRef Name="name" />
             <PropertyRef Name="dateup" />
             <PropertyRef Name="status" />
@@ -858,6 +866,8 @@ warning 6002: The table/view 'seletiene.ricardo.ViewProductServices' does not ha
             <PropertyRef Name="city" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="apellido" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="statususer" Type="Int32" />
           <Property Name="type" Type="Int32" />
           <Property Name="idcategory" Type="Int32" />
@@ -1061,6 +1071,8 @@ warning 6002: The table/view 'seletiene.ricardo.ViewProductServices' does not ha
                 <ScalarProperty Name="idcategory" ColumnName="idcategory" />
                 <ScalarProperty Name="type" ColumnName="type" />
                 <ScalarProperty Name="statususer" ColumnName="statususer" />
+                <ScalarProperty Name="apellido" ColumnName="apellido" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
