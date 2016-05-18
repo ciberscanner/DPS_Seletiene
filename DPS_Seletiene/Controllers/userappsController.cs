@@ -18,7 +18,9 @@ namespace Auxiliar.Controllers
         [Authorize(Roles = "Administrador, Callcenter")]
         public ActionResult Index(string sortOrder, string searchString, string state)
         {
-            db.Configuration.LazyLoadingEnabled = true; 
+            db.Configuration.LazyLoadingEnabled = true;
+
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
 
             var userapp = db.userapp.Include(u => u.city1).Include(u => u.collective1).Include(u => u.user_state);
 
@@ -90,6 +92,8 @@ namespace Auxiliar.Controllers
                 }
 
             }
+
+            userapp = userapp.OrderByDescending(s => s.registrationdate);
 
             switch (sortOrder)
             {

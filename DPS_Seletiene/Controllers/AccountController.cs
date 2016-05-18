@@ -136,6 +136,7 @@ namespace DPS_Seletiene.Controllers
 
         //
         // GET: /Account/Register
+        //[AllowAnonymous]
         [Authorize(Roles = "Administrador")]
         public ActionResult Register()
         {
@@ -145,6 +146,7 @@ namespace DPS_Seletiene.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
+        //[AllowAnonymous]
         [Authorize(Roles = "Administrador")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
