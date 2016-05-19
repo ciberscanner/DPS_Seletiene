@@ -165,8 +165,9 @@ warning 6002: The table/view 'seletiene.ricardo.ViewProductServices' does not ha
         <EntityType Name="ViewProductServices">
           <Key>
             <PropertyRef Name="id" />
-            <PropertyRef Name="nombre" />
-            <PropertyRef Name="apellido" />
+            <PropertyRef Name="name1" />
+            <PropertyRef Name="lastname1" />
+            <PropertyRef Name="email" />
             <PropertyRef Name="name" />
             <PropertyRef Name="dateup" />
             <PropertyRef Name="status" />
@@ -174,8 +175,10 @@ warning 6002: The table/view 'seletiene.ricardo.ViewProductServices' does not ha
             <PropertyRef Name="city" />
           </Key>
           <Property Name="id" Type="int" Nullable="false" />
-          <Property Name="nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="apellido" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="name1" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="lastname1" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="cellphone" Type="nvarchar" MaxLength="13" />
+          <Property Name="email" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="statususer" Type="int" />
           <Property Name="type" Type="int" />
           <Property Name="idcategory" Type="int" />
@@ -369,8 +372,10 @@ warning 6002: The table/view 'seletiene.ricardo.ViewProductServices' does not ha
           <EntitySet Name="ViewProductServices" EntityType="Self.ViewProductServices" store:Type="Views" store:Schema="ricardo">
             <DefiningQuery>SELECT 
     [ViewProductServices].[id] AS [id], 
-    [ViewProductServices].[nombre] AS [nombre], 
-    [ViewProductServices].[apellido] AS [apellido], 
+    [ViewProductServices].[name1] AS [name1], 
+    [ViewProductServices].[lastname1] AS [lastname1], 
+    [ViewProductServices].[cellphone] AS [cellphone], 
+    [ViewProductServices].[email] AS [email], 
     [ViewProductServices].[statususer] AS [statususer], 
     [ViewProductServices].[type] AS [type], 
     [ViewProductServices].[idcategory] AS [idcategory], 
@@ -857,8 +862,9 @@ warning 6002: The table/view 'seletiene.ricardo.ViewProductServices' does not ha
         <EntityType Name="ViewProductServices">
           <Key>
             <PropertyRef Name="id" />
-            <PropertyRef Name="nombre" />
-            <PropertyRef Name="apellido" />
+            <PropertyRef Name="name1" />
+            <PropertyRef Name="lastname1" />
+            <PropertyRef Name="email" />
             <PropertyRef Name="name" />
             <PropertyRef Name="dateup" />
             <PropertyRef Name="status" />
@@ -866,8 +872,10 @@ warning 6002: The table/view 'seletiene.ricardo.ViewProductServices' does not ha
             <PropertyRef Name="city" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="apellido" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="name1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="lastname1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="cellphone" Type="String" MaxLength="13" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="statususer" Type="Int32" />
           <Property Name="type" Type="Int32" />
           <Property Name="idcategory" Type="Int32" />
@@ -1071,8 +1079,10 @@ warning 6002: The table/view 'seletiene.ricardo.ViewProductServices' does not ha
                 <ScalarProperty Name="idcategory" ColumnName="idcategory" />
                 <ScalarProperty Name="type" ColumnName="type" />
                 <ScalarProperty Name="statususer" ColumnName="statususer" />
-                <ScalarProperty Name="apellido" ColumnName="apellido" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="cellphone" ColumnName="cellphone" />
+                <ScalarProperty Name="lastname1" ColumnName="lastname1" />
+                <ScalarProperty Name="name1" ColumnName="name1" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

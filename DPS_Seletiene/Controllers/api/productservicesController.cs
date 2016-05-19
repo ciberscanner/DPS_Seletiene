@@ -31,20 +31,20 @@ namespace DPS_Seletiene.Controllers.api
         }
           
         [System.Web.Http.HttpGet]
-     
-        public IQueryable<productservice> productbyuser(int iduser)
+
+        public IQueryable<ViewProductServices> productbyuser(int iduser)
         {
             db.Configuration.LazyLoadingEnabled = false;
-            return db.productservice.Where(r => r.idowner == iduser);
+            return db.ViewProductServices.Where(r => r.idowner == iduser);
         }
 
 
         [System.Web.Http.HttpGet]
 
-        public IQueryable<productservice> productsbycategory(int idcategory)
+        public IQueryable<ViewProductServices> productsbycategory(int idcategory)
         {
             db.Configuration.LazyLoadingEnabled = false;
-            return db.productservice.Where(r => r.idcategory == idcategory);
+            return db.ViewProductServices.Where(r => r.idcategory == idcategory);
         }
 
         [System.Web.Http.HttpGet]
@@ -156,7 +156,7 @@ namespace DPS_Seletiene.Controllers.api
                         {
                             //      Image image = Image.FromStream(ms);
                             string path1 = string.Format("{0}/{1}{2}", System.Web.HttpContext.Current.Server.MapPath("~/Images/"), "image_", productservice.name +DateTime.Now +".jpg");
-
+                            productservice.image = path1;
                             //                        image.Save("./Image.jpg", ImageFormat.Jpeg);
                             File.WriteAllBytes(path1, bytes);
                         }
@@ -168,6 +168,7 @@ namespace DPS_Seletiene.Controllers.api
 
                    
                 }
+              
                 db.productservice.Add(productservice);
                 db.SaveChanges();
             }

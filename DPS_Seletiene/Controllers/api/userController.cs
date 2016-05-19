@@ -173,6 +173,7 @@ namespace DPS_Seletiene.Controllers.api
             }
         }
         // GET: api/userappApi/5
+          [System.Web.Http.HttpGet]    
         [ResponseType(typeof(userapp))]
         public async Task<IHttpActionResult> Getuser(int id)
         {
