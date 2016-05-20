@@ -178,6 +178,7 @@ warning 6002: The table/view 'seletiene.ricardo.ViewProductServices' does not ha
           <Property Name="name1" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="lastname1" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="cellphone" Type="nvarchar" MaxLength="13" />
+          <Property Name="telephone" Type="nvarchar" MaxLength="10" />
           <Property Name="email" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="statususer" Type="int" />
           <Property Name="type" Type="int" />
@@ -375,6 +376,7 @@ warning 6002: The table/view 'seletiene.ricardo.ViewProductServices' does not ha
     [ViewProductServices].[name1] AS [name1], 
     [ViewProductServices].[lastname1] AS [lastname1], 
     [ViewProductServices].[cellphone] AS [cellphone], 
+    [ViewProductServices].[telephone] AS [telephone], 
     [ViewProductServices].[email] AS [email], 
     [ViewProductServices].[statususer] AS [statususer], 
     [ViewProductServices].[type] AS [type], 
@@ -875,6 +877,7 @@ warning 6002: The table/view 'seletiene.ricardo.ViewProductServices' does not ha
           <Property Name="name1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="lastname1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="cellphone" Type="String" MaxLength="13" FixedLength="false" Unicode="true" />
+          <Property Name="telephone" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="statususer" Type="Int32" />
           <Property Name="type" Type="Int32" />
@@ -1080,6 +1083,7 @@ warning 6002: The table/view 'seletiene.ricardo.ViewProductServices' does not ha
                 <ScalarProperty Name="type" ColumnName="type" />
                 <ScalarProperty Name="statususer" ColumnName="statususer" />
                 <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="telephone" ColumnName="telephone" />
                 <ScalarProperty Name="cellphone" ColumnName="cellphone" />
                 <ScalarProperty Name="lastname1" ColumnName="lastname1" />
                 <ScalarProperty Name="name1" ColumnName="name1" />

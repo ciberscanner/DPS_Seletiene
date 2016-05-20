@@ -18,6 +18,7 @@ namespace DPS_Seletiene.data
         public string name1 { get; set; }
         public string lastname1 { get; set; }
         public string cellphone { get; set; }
+        public string telephone { get; set; }
         public string email { get; set; }
         public Nullable<int> statususer { get; set; }
         public Nullable<int> type { get; set; }

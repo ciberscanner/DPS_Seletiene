@@ -14,6 +14,7 @@ using DPS_Seletiene.data;
 using System.IO;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Globalization;
 
 namespace DPS_Seletiene.Controllers.api
 {
@@ -154,9 +155,14 @@ namespace DPS_Seletiene.Controllers.api
                     {
                         try
                         {
+                            string formatted = DateTime.Now.ToString("dd-M-yyyy");
+                            var id = db.productservice.Max(p => p.id)+1;
+                            string name = id + "_" + productservice.name + formatted + ".jpg";
                             //      Image image = Image.FromStream(ms);
-                            string path1 = string.Format("{0}/{1}{2}", System.Web.HttpContext.Current.Server.MapPath("~/Images/"), "image_", productservice.name +DateTime.Now +".jpg");
-                            productservice.image = path1;
+                            string path1 = string.Format("{0}/{1}{2}", System.Web.HttpContext.Current.Server.MapPath("~/Images"), "image_", name);
+
+                           
+                            productservice.image = "image_"+name;
                             //                        image.Save("./Image.jpg", ImageFormat.Jpeg);
                             File.WriteAllBytes(path1, bytes);
                         }
