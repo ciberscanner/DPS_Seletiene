@@ -92,6 +92,8 @@ namespace DPS_Seletiene.Controllers.api
         [ResponseType(typeof(productservice))]
         public async Task<IHttpActionResult> stateproducto(int idproducto, int state)
         {
+            db.Configuration.LazyLoadingEnabled = false;
+
             productservice productservice = await db.productservice.FindAsync(idproducto);
             productservice.status = state;
             db.Entry(productservice).State = EntityState.Modified;
